@@ -29,7 +29,7 @@ npm install
 
 4. Open your web browser and go to `http://localhost:3000` to access the app.
 
-## User Documentation
+### User Documentation
 
 ### Using the App
 
@@ -41,17 +41,96 @@ npm install
 
 4. Click the "Create Overlay" button to add a new overlay to the stream.
 
-### API Endpoints
+# Overlay Management API Documentation
 
-The app also provides the following API endpoints:
+This API allows you to create, retrieve, update, and delete overlays.
 
-- `POST /overlays`: Create a new overlay.
-- `GET /overlays`: Retrieve overlay settings.
-- `DELETE /overlays/<overlay_id>`: Delete an overlay by its ID.
-- `GET /livestream?action=start&url=<rtsp_url>`: Start the livestream with the specified RTSP URL.
-- `GET /livestream?action=stop`: Stop the livestream.
+## Endpoints
 
-You can use these endpoints to programmatically control the app.
+### Create Overlay
+
+- **URL:** `/overlays`
+- **Method:** `POST`
+- **Description:** Create a new overlay.
+- **Request Body:** JSON object containing overlay data.
+- **Response:**
+  - `201 Created` - Overlay created successfully.
+    ```json
+    {
+      "message": "Overlay created successfully",
+      "inserted_id": "<inserted_overlay_id>"
+    }
+    ```
+  - `200 OK` - Overlay updated successfully (if an overlay already exists, it will be updated).
+    ```json
+    {
+      "message": "Overlay updated successfully"
+    }
+    ```
+
+### Retrieve Overlays
+
+- **URL:** `/overlays`
+- **Method:** `GET`
+- **Description:** Retrieve all overlays.
+- **Response:**
+  - `200 OK` - List of overlays.
+    ```json
+    [
+      {
+        "field1": "value1",
+        "field2": "value2",
+        // Other overlay fields
+      },
+      // Additional overlays
+    ]
+    ```
+
+### Update Overlay
+
+- **URL:** `/overlays`
+- **Method:** `PUT`
+- **Description:** Update an existing overlay.
+- **Request Body:** JSON object containing overlay data.
+- **Response:**
+  - `200 OK` - Overlay updated successfully.
+    ```json
+    {
+      "message": "Overlay updated successfully"
+    }
+  - `404 Not Found` - Overlay not found or not updated.
+    ```json
+    {
+      "message": "Overlay not found or not updated"
+    }
+  - `200 OK` - Nothing to update (if no overlay exists).
+    ```json
+    {
+      "message": "Nothing to update."
+    }
+
+### Delete Overlay
+
+- **URL:** `/overlays`
+- **Method:** `DELETE`
+- **Description:** Delete an existing overlay.
+- **Response:**
+  - `200 OK` - Overlay deleted successfully.
+    ```json
+    {
+      "message": "Overlay deleted successfully"
+    }
+  - `404 Not Found` - Overlay not found or not deleted.
+    ```json
+    {
+      "message": "Overlay not found or not deleted"
+    }
+  - `200 OK` - Nothing to delete (if no overlay exists).
+    ```json
+    {
+      "message": "Nothing to delete."
+    }
+
 
 ## React Code
 
